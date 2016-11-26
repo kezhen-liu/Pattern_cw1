@@ -18,6 +18,5 @@ for i=1:520
     end
 end
 
-        
-        
-
+trainCov = cov(double(trainSet).');
+[eig_vec, eig_val] = eig(trainCov);
