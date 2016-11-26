@@ -1,0 +1,4 @@
+Q1.a
+
+--Partition the face data
+We found that every successive ten faces belong to a single person, referring to 100faces.jpg. As a result, we decided to choose the first seven faces out of ten faces belonging to the same person as training set, and the remaining three faces as testing set.

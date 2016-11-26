@@ -19,7 +19,7 @@ for j=1:520
     %imshow(I(:,:,j));
 end
 
-for j=101:200
-    subplot(10,10,j-100)
+for j=1:100
+    subplot(10,10,j)
     imshow(I(:,:,j));
 end
