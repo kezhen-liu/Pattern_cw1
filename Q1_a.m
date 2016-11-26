@@ -18,5 +18,14 @@ for i=1:520
     end
 end
 
-trainCov = cov(double(trainSet).');
+trainCov = cov((trainSet).');
 [eig_vec, eig_val] = eig(trainCov);
+
+mEigVal = zeros(2576,1);
+
+for i=1:2576
+    mEigVal(i) = eig_val(i,i);
+end
+
+mEigVal = sort(mEigVal);
+

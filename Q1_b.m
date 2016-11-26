@@ -1,4 +1,4 @@
-clear;
+%clear;
 
 load('face.mat');
 
@@ -21,6 +21,11 @@ end
 S=cov(trainSet);
 [V,D] = eig(S);
 
+mD=zeros(364,1);
 
-        
+for i=1:364
+    mD(i) = D(i,i);
+end
+
+mD=sort(mD);
         
