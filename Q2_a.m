@@ -15,8 +15,10 @@ reconTrainImg = zeros(2576,4,3); %(pixcel, different number of bases, img)
 reconTrain = zeros(364,4,3); %(bases, different number of bases, img)
 
 for baseNum=[10 50 100 364] 
+    imgIndex=1;
     for i=[1 11 21] % img number in train set
-        reconTrain(1:baseNum,baseNumIndex,int64(i/10+1)) = (trainSetDiff(:,i).' * mEigVec(:,1:baseNum)).';
+        reconTrain(1:baseNum,baseNumIndex,imgIndex) = (trainSetDiff(:,i).' * mEigVec(:,1:baseNum)).';
+        imgIndex = imgIndex+1;
     end
 
     for i=1:3
@@ -37,7 +39,15 @@ for j=1:4
         A(:,i)=reconTrainImg(1+(i-1)*56:i*56,j,IMG_TO_PLOT);
     end
     Img(:,:,j) = mat2gray(A, [min(min(A)) max(max(A))]);
-    subplot(1,4,j);
+    subplot(1,5,j);
     imshow(Img(:,:,j));
     hold on;
 end
+subplot(1,5,5);
+ref = zeros(56,46);
+for i=1:46
+        ref(:,i)=trainSet(1+(i-1)*56:i*56,(IMG_TO_PLOT-1)*10+1);
+end
+Img1 = mat2gray(ref, [min(min(ref)) max(max(ref))]);
+imshow(Img1);
+
