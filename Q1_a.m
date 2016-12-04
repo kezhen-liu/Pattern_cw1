@@ -17,8 +17,12 @@ for i=1:520
         trainSetIndex = trainSetIndex + 1;
     end
 end
-
-trainCov = cov((trainSet).');
+trainMean = mean(trainSet.').';
+for i = 1:364
+    trainSet(:,i) = trainSet(:,i)-trainMean;
+end
+%trainCov = cov((trainSet).');
+trainCov = (trainSet*(trainSet.'))./364;
 [eig_vec, eig_val] = eig(trainCov);
 
 mEigVal = zeros(1,363);
@@ -34,11 +38,6 @@ for i=1:2576
 end
 
 % To show the eigenfaces
-meanFace = mean(trainSet.').';
-for i = 1:363
-    mEigVec(:,i)= mEigVec(:,i) + meanFace;
-end
-
 Img=zeros(56,46,363);
 A=zeros(56,46);
 for j=1:363
@@ -46,6 +45,6 @@ for j=1:363
         A(:,i)=mEigVec(1+(i-1)*56:i*56,j);
     end
 
-    Img(:,:,j) = mat2gray(A, [0 255]);
+    Img(:,:,j) = mat2gray(A, [min(min(A)) max(max(A))]);
 end
 imshow(Img(:,:,363));
