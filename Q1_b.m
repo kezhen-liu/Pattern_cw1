@@ -18,6 +18,8 @@ for i=1:520
     end
 end
 
+save('Q1_b_DataSet.mat', 'trainSet','testSet');
+
 %S=cov(trainSet);
 trainMean = mean(trainSet.').';
 for i = 1:364
@@ -47,3 +49,5 @@ for j=1:364
     Img(:,:,j) = mat2gray(A, [min(min(A)) max(max(A))]);
 end
 imshow(Img(:,:,364));
+
+%save('Q1_b_EigVec.mat', 'mEigVec');
