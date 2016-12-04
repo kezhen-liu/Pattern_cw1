@@ -24,8 +24,26 @@ S=cov(trainSet);
 mD=zeros(364,1);
 
 for i=1:364
-    mD(i) = D(i,i);
+    mD(i) = D(i,i)*364;
 end
 
-mD=sort(mD);
-        
+%mD=sort(mD);
+
+% To show the eigenfaces
+%{
+meanFace = mean(trainSet).';
+for i = 1:364
+    V(:,i)= V(:,i) + meanFace;
+end
+
+Img=zeros(56,46,363);
+A=zeros(56,46);
+for j=1:363
+    for i=1:46
+        A(:,i)=V(1+(i-1)*56:i*56,j);
+    end
+
+    Img(:,:,j) = mat2gray(A, [0 255]);
+end
+imshow(Img(:,:,363));
+     %}   

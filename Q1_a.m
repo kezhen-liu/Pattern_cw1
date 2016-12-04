@@ -21,11 +21,31 @@ end
 trainCov = cov((trainSet).');
 [eig_vec, eig_val] = eig(trainCov);
 
-mEigVal = zeros(2576,1);
+mEigVal = zeros(1,363);
+mEigVec = zeros(2576,363);
+mEigIndex = 1;
 
 for i=1:2576
-    mEigVal(i) = eig_val(i,i);
+    if eig_val(i,i) > 100
+        mEigVal(1,mEigIndex) = eig_val(i,i);
+        mEigVec(:,mEigIndex) = eig_vec(:,i);
+        mEigIndex = mEigIndex+1;
+    end
 end
 
-mEigVal = sort(mEigVal);
+% To show the eigenfaces
+meanFace = mean(trainSet.').';
+for i = 1:363
+    mEigVec(:,i)= mEigVec(:,i) + meanFace;
+end
 
+Img=zeros(56,46,363);
+A=zeros(56,46);
+for j=1:363
+    for i=1:46
+        A(:,i)=mEigVec(1+(i-1)*56:i*56,j);
+    end
+
+    Img(:,:,j) = mat2gray(A, [0 255]);
+end
+imshow(Img(:,:,363));
