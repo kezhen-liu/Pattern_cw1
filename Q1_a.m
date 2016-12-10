@@ -1,4 +1,4 @@
-clear;
+%clear;
 
 load('face.mat');
 

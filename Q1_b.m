@@ -37,7 +37,9 @@ end
 %mD=sort(mD);
 
 mEigVec = trainSet * V;
-mEigVec = mEigVec/norm(mEigVec);
+for i=1:364
+    mEigVec(:,i) = mEigVec(:,i)/norm(mEigVec(:,i));
+end
 % To show the eigenfaces
 Img=zeros(56,46,363);
 A=zeros(56,46);
