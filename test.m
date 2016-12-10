@@ -1,4 +1,4 @@
-clear;
+%clear;
 
 %load('test_eigvec.mat');
 load('Q1_b_EigVec.mat');
@@ -10,9 +10,9 @@ for i = 1:364
     trainSetDiff(:,i) = trainSet(:,i)-trainMean;
 end
 
-rTrainSetDiff = trainSetDiff(:,1).' * mEigVec(:,300:363);
+rTrainSetDiff = trainSetDiff(:,1).' * mEigVec(:,1:364);
 
-rImg =(rTrainSetDiff * mEigVec(:,300:363).').' + trainMean;
+rImg =(rTrainSetDiff * mEigVec(:,1:364).').' + trainMean;
 
 A=zeros(56,46);
 for i=1:46
