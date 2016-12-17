@@ -22,12 +22,24 @@ for i=1:520
     end
 end
 trainMean = mean(trainSet.').';
+
+%To plot the mean face
+temp=zeros(56,46);
+for i=1:46
+    temp(:,i)=trainMean(1+(i-1)*56:i*56);
+end
+meanFaceImg = mat2gray(temp, [0 256]);
+imshow(meanFaceImg);
+
+
 for i = 1:TRAIN_NUM
     trainSet(:,i) = trainSet(:,i)-trainMean;
 end
-%trainCov = cov((trainSet).');
+
+tic
 trainCov = (trainSet*(trainSet.'))./TRAIN_NUM;
 [eig_vec, eig_val] = eig(trainCov);
+toc
 
 mEigVal = zeros(1,EIGVEC_NUM);
 mEigVec = zeros(2576,EIGVEC_NUM);
@@ -41,6 +53,17 @@ for i=1:2576
     end
 end
 
+%{
+%To plot the entire eigenvalues
+plotEigValues=zeros(2576,1);
+for i=1:2576
+    plotEigValues(i)=eig_val(i,i);
+end
+plot(1:2576,plotEigValues);
+title('Eigenvalues of training set');
+ylabel('Values');
+xlabel('#Eigenvector');
+
 % To show the eigenfaces
 Img=zeros(56,46,EIGVEC_NUM);
 A=zeros(56,46);
@@ -52,3 +75,4 @@ for j=1:EIGVEC_NUM
     Img(:,:,j) = mat2gray(A, [min(min(A)) max(max(A))]);
 end
 imshow(Img(:,:,467));
+%}

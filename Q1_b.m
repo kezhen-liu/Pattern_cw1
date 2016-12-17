@@ -22,15 +22,18 @@ for i=1:520
     end
 end
 
-save('Q1_b_DataSet.mat', 'trainSet','testSet');
+%save('Q1_b_DataSet.mat', 'trainSet','testSet');
 
-%S=cov(trainSet);
 trainMean = mean(trainSet.').';
 for i = 1:TRAIN_NUM
     trainSet(:,i) = trainSet(:,i)-trainMean;
 end
+
+tic
 S = ((trainSet.')*trainSet)./TRAIN_NUM;
 [V,D] = eig(S);
+mEigVec = trainSet * V(:,TRAIN_NUM-EIGVEC_NUM+1:TRAIN_NUM);
+toc
 
 mD=zeros(TRAIN_NUM,1);
 
@@ -38,9 +41,6 @@ for i=1:TRAIN_NUM
     mD(i) = D(i,i);
 end
 
-%mD=sort(mD);
-
-mEigVec = trainSet * V(:,TRAIN_NUM-EIGVEC_NUM+1:TRAIN_NUM);
 for i=1:EIGVEC_NUM
     mEigVec(:,i) = mEigVec(:,i)/norm(mEigVec(:,i));
 end
