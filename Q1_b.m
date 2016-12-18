@@ -56,4 +56,5 @@ for j=1:EIGVEC_NUM
 end
 imshow(Img(:,:,EIGVEC_NUM));
 
+%mEigVec=fliplr(mEigVec);
 %save('Q1_b_EigVec.mat', 'mEigVec');
