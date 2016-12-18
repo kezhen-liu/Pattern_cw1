@@ -58,3 +58,5 @@ imshow(Img(:,:,EIGVEC_NUM));
 
 %mEigVec=fliplr(mEigVec);
 %save('Q1_b_EigVec.mat', 'mEigVec');
+%mEigVal=flipud(mD(2:468));
+%save('Q1_b_EigVal.mat', 'mEigVal');

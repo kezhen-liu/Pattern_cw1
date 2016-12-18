@@ -2,7 +2,7 @@ clear;
 
 TRAIN_NUM = 468;
 TEST_NUM = 52;
-EIGVEC_NUM = 40;
+EIGVEC_NUM = 467;
 
 load('Q1_b_EigVec.mat');
 load('Q1_b_DataSet.mat');
@@ -44,6 +44,11 @@ for i=1:TEST_NUM % for each test face
         for k=1:int32(TRAIN_NUM/52) % for each face in a single target class
             d2(k)=norm(ax(:,(j-1)*int32(TRAIN_NUM/52)+k)-ay(:,i));
         end
+        %{
+        if i==4 && j == 4;
+            disp(' ');
+        end
+        %}
         d1(j)=min(d2);
     end
     [diff(i),outputCl(i)]=min(d1);
@@ -73,3 +78,22 @@ for i=1:TEST_NUM
     end
 end
 accuray=match/TEST_NUM
+
+%{
+% Plot some specific faces
+load('face.mat');
+wrong=zeros(56,46);
+test=zeros(56,46);
+for i=1:46
+    wrong(:,i)=X(1+(i-1)*56:i*56,38);
+    test(:,i)=X(1+(i-1)*56:i*56,40);
+end
+I(:,:) = mat2gray(test, [0 256]);
+subplot(1,2,1);
+imshow(I(:,:));
+title('Test face');
+I(:,:) = mat2gray(wrong, [0 256]);
+subplot(1,2,2);
+imshow(I(:,:));
+title('..best matches to..');
+%}
