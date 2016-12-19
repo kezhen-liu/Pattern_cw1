@@ -4,7 +4,8 @@ TRAIN_NUM = 468;
 TEST_NUM = 52;
 
 config
-OPTION_STR='-t 2 -q -c 32 -g 0.00048828125 -w1 9 -w-1 1';
+OPTION_STR='-t 2 -q -c 32 -g 0.00048828125 -w1 51 -w-1 1';
+% -c 32 -g 0.00048828125 -w1 9 -w-1 1
 
 load('Q1_b_DataSet.mat');
 
@@ -53,6 +54,15 @@ for i=1:52
     end
 end
 
+% Plot confusion matrix
+confusion=confusionmat(targetCl,overall_predict);
+imagesc(confusion);
+colormap cool;
+title('Confusion Matrix');
+xlabel('Output Class');
+ylabel('Target Class');
+
+% Calculate on accuracy
 match=0;
 for i=1:TEST_NUM
     if overall_predict(i)==targetCl(i)
@@ -60,3 +70,39 @@ for i=1:TEST_NUM
     end
 end
 accuracy=match/TEST_NUM
+
+
+% To calculate margin
+margin=zeros(52,2);
+for i=1:52
+    margin(i,1)=1/norm((model(i).sv_coef(1:model(i).nSV(1)).')*model(i).SVs(1:model(i).nSV(1),:));
+    margin(i,2)=1/norm((model(i).sv_coef(model(i).nSV(1):model(i).totalSV).')*model(i).SVs(model(i).nSV(1):model(i).totalSV,:));
+end
+minMargin=min(min(margin))
+
+
+% Plot some specific faces
+load('face.mat');
+wrong=zeros(56,46);
+test=zeros(56,46);
+svPlot=zeros(56,46);
+for i=1:46
+    wrong(:,i)=X(1+(i-1)*56:i*56,379); %342
+    test(:,i)=X(1+(i-1)*56:i*56,380); %340
+    svPlot(:,i)=model(38).SVs(6,1+(i-1)*56:i*56).';
+end
+I(:,:) = mat2gray(test, [0 256]);
+subplot(1,3,1);
+imshow(I(:,:));
+title('Test face');
+I(:,:) = mat2gray(wrong, [0 256]);
+subplot(1,3,2);
+imshow(I(:,:));
+title('..best matches to..');
+subplot(1,3,3);
+I(:,:) = mat2gray(svPlot, [-1 1]);
+imshow(I(:,:));
+title({'Most Sifnificant SV', ' of output class'});
+
+
+

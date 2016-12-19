@@ -63,6 +63,7 @@ for i=1:52
     end
 end
 
+% Plot confusion matrix
 confusion=confusionmat(targetCl,outputCl);
 imagesc(confusion);
 colormap cool;
