@@ -1,6 +1,13 @@
 
 Pattern Recognition Coursework 1
 ===
+Briefings
+---
+#### -Q1 PCA analysis and its variant 
+
+#### -Q2 Face reconstruction and recognition using PCA
+
+#### -Q3 Face recognition using SVM
 
 Logs
 ---
